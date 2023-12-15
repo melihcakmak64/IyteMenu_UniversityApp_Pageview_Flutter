@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   List<String> vejeteryanMenu = <String>[];
   List<String> veganMenu = <String>[];
   String selectedDate = NetworkController.datetimeToString(DateTime.now());
+  bool _isLoading = false;
   @override
   void initState() {
     _loadMenus();
@@ -33,7 +34,9 @@ class _HomePageState extends State<HomePage> {
         .then((value) {
       if (value != null) {
         selectedDate = NetworkController.datetimeToString(value);
-        _loadMenus();
+        setState(() {
+          _loadMenus();
+        });
       }
     });
   }
@@ -41,10 +44,13 @@ class _HomePageState extends State<HomePage> {
 //--------------Network requests----------------
 
   Future<void> _loadMenus() async {
+    _isLoading = true;
     normalMenu = await NetworkController.readMenu("O", tarih: selectedDate);
     vejeteryanMenu = await NetworkController.readMenu("V", tarih: selectedDate);
     veganMenu = await NetworkController.readMenu("VEG", tarih: selectedDate);
-    setState(() {});
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -124,26 +130,33 @@ class _HomePageState extends State<HomePage> {
             ),
 
             //--------------MENU------------------------//
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(30),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _activePage = page;
-                      });
-                    },
-                    itemCount: _pages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _pages[index % _pages.length];
-                    },
-                  ),
-                ),
-              ),
-            )
+
+            _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: PageView.builder(
+                          controller: _pageController,
+                          onPageChanged: (int page) {
+                            setState(() {
+                              _activePage = page;
+                            });
+                          },
+                          itemCount: _pages.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _pages[index % _pages.length];
+                          },
+                        ),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),
