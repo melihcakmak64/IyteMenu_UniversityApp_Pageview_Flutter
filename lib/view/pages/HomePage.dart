@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(Duration(days: 30)),
+            lastDate: DateTime.now().add(const Duration(days: 30)),
             initialEntryMode: DatePickerEntryMode.calendarOnly)
         .then((value) {
       if (value != null) {
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: Text(
                 selectedDate,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
 

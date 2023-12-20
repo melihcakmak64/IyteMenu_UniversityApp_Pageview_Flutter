@@ -17,13 +17,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'IyteMenu',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 231, 223, 223)),
         useMaterial3: true,
         datePickerTheme: DatePickerThemeData(
           headerForegroundColor: Colors.white,
-          backgroundColor: Color.fromARGB(255, 245, 1, 74),
+          backgroundColor: Color.fromARGB(255, 247, 71, 71),
+          cancelButtonStyle: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white, // Set the text color to black
+          ),
+          confirmButtonStyle: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white, // Set the text color to black
+          ),
         ),
       ),
       home: const HomePage(),
